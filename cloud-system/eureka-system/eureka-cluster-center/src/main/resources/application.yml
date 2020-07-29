@@ -1,0 +1,6 @@
+spring:
+  profiles:
+    active: 7009
+logging:
+  level:
+    root: debug

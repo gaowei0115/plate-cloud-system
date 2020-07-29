@@ -1,0 +1,5 @@
+## 系统启动环境变量引用
+spring:
+  profiles:
+    active: dev
+

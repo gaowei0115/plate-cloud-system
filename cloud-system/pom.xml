@@ -11,7 +11,25 @@
 
     <artifactId>cloud-system</artifactId>
     <version>1.0.0-SNAPSHOT</version>
+    <modules>
+        <module>boot-system</module>
+        <module>eureka-system</module>
+        <module>ribbon-system</module>
+    </modules>
+    <packaging>pom</packaging>
     <description>spring cloud 架构学习</description>
 
+    <dependencyManagement>
+        <!-- 引入Spring cloud parent包 -->
+        <dependencies>
+            <dependency>
+                <groupId>org.springframework.cloud</groupId>
+                <artifactId>spring-cloud-dependencies</artifactId>
+                <version>Hoxton.SR6</version>
+                <type>pom</type>
+                <scope>import</scope>
+            </dependency>
+        </dependencies>
+    </dependencyManagement>
 
 </project>

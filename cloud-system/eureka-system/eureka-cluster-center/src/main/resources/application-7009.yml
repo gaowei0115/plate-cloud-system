@@ -1,0 +1,14 @@
+spring:
+  profiles: 7009
+  application:
+    name: eureka-cluster-center
+server:
+  port: 7009
+eureka:
+  instance:
+    hostname: eureka.node2
+    instance-id: ${spring.application.name}:${server.port}:${random.value}
+    appname: ${spring.application.name}
+  client:
+    service-url:
+      defaultZone: http://eureka.node1:7008/eureka/

@@ -1,0 +1,18 @@
+## 系统参数配置
+server:
+  port: 8081
+  servlet:
+    context-path: /boot
+
+## 自定义参数配置
+boot:
+  auto:
+    name: mmc
+    project: boot
+    random:
+      value: ${random.value}
+      int: ${random.int}
+      long: ${random.long}
+      range:
+        int: ${random.int(10)}
+        long: ${random.long[1,100]}
