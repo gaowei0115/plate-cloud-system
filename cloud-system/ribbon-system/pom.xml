@@ -14,6 +14,8 @@
     <description>ribbon 负载均衡器</description>
     <modules>
         <module>ribbon-consumer</module>
+        <module>hystrix-consumer</module>
+        <module>feign-consumer</module>
     </modules>
     <packaging>pom</packaging>
 

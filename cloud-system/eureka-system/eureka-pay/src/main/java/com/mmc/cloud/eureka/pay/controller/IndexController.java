@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.util.List;
+import java.util.Random;
 
 /**
  * @packageName：com.mmc.cloud.eureka.pay.controller
@@ -30,11 +31,17 @@ public class IndexController {
 
 
     @GetMapping("/{num}")
-    public String index(@PathVariable("num") int num) {
+    public String index(@PathVariable("num") int num) throws InterruptedException {
         logger.debug("访问 index/{num}..");
         List<ServiceInstance> instances = client.getInstances("pay-node");
         ServiceInstance instance = instances.get(0);
         logger.debug(instances.toString());
+
+        Random random = new Random();
+        int sleep = random.nextInt(3000);
+        logger.debug("thread sleep {} ms", sleep);
+        Thread.sleep(sleep);
+
         return num + ".html";
     }
 }

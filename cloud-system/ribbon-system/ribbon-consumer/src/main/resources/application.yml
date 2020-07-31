@@ -5,6 +5,11 @@ server:
 spring:
   application:
     name: ribbon-consumer
+    # 开启重试机制
+  cloud:
+    loadbalancer:
+      retry:
+        enabled: true
 eureka:
   client:
     service-url:

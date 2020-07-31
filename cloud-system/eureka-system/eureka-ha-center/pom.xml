@@ -12,6 +12,6 @@
     <artifactId>eureka-ha-center</artifactId>
     <version>1.0.0-SNAPSHOT</version>
     <description>eureka 高可用集群注册中心</description>
-
+    <packaging>jar</packaging>
 
 </project>
