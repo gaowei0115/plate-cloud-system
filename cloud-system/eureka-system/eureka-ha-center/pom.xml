@@ -14,4 +14,29 @@
     <description>eureka 高可用集群注册中心</description>
     <packaging>jar</packaging>
 
+    <build>
+        <finalName>eureka-ha-center</finalName>
+        <plugins>
+            <plugin><!--maven-jar-plugin用于生成META-INF/MANIFEST.MF文件的部分内容 jar包-->
+                <groupId>org.apache.maven.plugins</groupId> <!--引入maven插件的groupId-->
+                <artifactId>maven-jar-plugin</artifactId> <!--引入maven插件的artifactId-->
+                <configuration>
+                    <archive>
+                        <manifest>
+                            <addClasspath>true</addClasspath><!--MANIFEST.MF 是否增加依赖包-->
+                            <classpathPrefix>lib/</classpathPrefix><!--MANIFEST.MF文件 依赖包位置格式-->
+                            <mainClass>com.mmc.cloud.eureka.ha.center.EurekaHaCenterServer</mainClass>
+                        </manifest>
+                    </archive>
+                </configuration>
+            </plugin>
+        </plugins>
+        <resources>
+            <resource>
+                <!--src/main/resources ：文件资源路径-->
+                <directory>src/main/resources</directory>
+            </resource>
+        </resources>
+    </build>
+
 </project>

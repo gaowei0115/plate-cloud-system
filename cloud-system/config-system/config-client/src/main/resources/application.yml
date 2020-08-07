@@ -1,0 +1,23 @@
+server:
+  port: 8086
+
+spring:
+  application:
+    name: config-client
+  cloud:
+    config:
+      label: master
+      discovery:
+        enabled: true
+        service-id: config-server
+      enabled: true
+      fail-fast: true
+      profile: dev
+    consul:
+      host: localhost
+      port: 9096
+      discovery:
+        ip-address: localhost
+        port: ${server.port}
+        instance-id: config-client-${server.port}
+        service-name: config-client

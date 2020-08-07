@@ -3,29 +3,28 @@
          xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <parent>
-        <artifactId>ribbon-system</artifactId>
+        <artifactId>cloud-system</artifactId>
         <groupId>com.mmc.cloud.plate</groupId>
         <version>1.0.0-SNAPSHOT</version>
     </parent>
     <modelVersion>4.0.0</modelVersion>
 
-    <artifactId>feign-consumer</artifactId>
+    <artifactId>config-system</artifactId>
     <version>1.0.0-SNAPSHOT</version>
-    <description></description>
+    <modules>
+        <module>config-server</module>
+        <module>config-client</module>
+    </modules>
+    <packaging>pom</packaging>
+
+    <description>Spring cloud 配置中心</description>
 
     <dependencies>
-        <dependency>
-            <groupId>org.springframework.cloud</groupId>
-            <artifactId>spring-cloud-starter-openfeign</artifactId>
-        </dependency>
-        <dependency>
-            <groupId>org.springframework.boot</groupId>
-            <artifactId>spring-boot-starter-web</artifactId>
-        </dependency>
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-test</artifactId>
         </dependency>
     </dependencies>
+
 
 </project>

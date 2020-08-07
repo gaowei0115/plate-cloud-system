@@ -27,7 +27,7 @@ public class PayController {
      * @return
      *          响应扣款结果
      */
-    @GetMapping("/cut")
+    @PostMapping("/cut")
     public @ResponseBody CutPayResponse cutPay(@RequestBody CutPayRequest request) {
         return payService.cutPay(request);
     }
