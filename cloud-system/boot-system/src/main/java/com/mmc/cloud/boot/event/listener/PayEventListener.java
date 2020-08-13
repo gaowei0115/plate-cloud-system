@@ -2,6 +2,7 @@ package com.mmc.cloud.boot.event.listener;
 
 import com.mmc.cloud.boot.event.PayEvent;
 import org.springframework.context.ApplicationListener;
+import org.springframework.stereotype.Component;
 
 /**
  * @packageName：com.mmc.cloud.boot.event.listener
@@ -10,6 +11,7 @@ import org.springframework.context.ApplicationListener;
  * @date： 2020-08-13 17:42
  * @history: (version) author date desc
  */
+@Component
 public class PayEventListener implements ApplicationListener<PayEvent> {
 
 
