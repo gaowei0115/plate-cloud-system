@@ -1,0 +1,10 @@
+spring:
+  cloud:
+    config:
+      server:
+        git:
+          uri: https://github.com/gaowei0115/cloud-config.git
+          username: gao_wei0115@sina.com
+          password: gaowei631890642
+          search-paths: /config/${APP_LOCATE:prod}
+          default-label: master

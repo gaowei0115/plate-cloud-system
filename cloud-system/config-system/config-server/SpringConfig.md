@@ -7,4 +7,8 @@
     可以采用eureka注册中心
     
     
+    验证config-server配置成功
+    https://github.com/gaowei0115/cloud-config.git
+    
+    
     

@@ -13,14 +13,14 @@ import org.springframework.web.bind.annotation.RestController;
  * @history: (version) author date desc
  */
 //@RefreshScope
-//@RestController
+@RestController
 public class ConfigClientController {
 
-//    @Value("${name}")
-//    private String name;
-//
-//    @RequestMapping("/name")
-//    public String from() {
-//        return this.name;
-//    }
+    @Value("${name}")
+    private String name;
+
+    @RequestMapping("/name")
+    public String from() {
+        return this.name;
+    }
 }
