@@ -1,6 +1,5 @@
 server:
   port: 8086
-
 spring:
   application:
     name: config-client
@@ -15,7 +14,7 @@ spring:
       profile: dev
     consul:
       host: localhost
-      port: 9096
+      port: 8500
       discovery:
         ip-address: localhost
         port: ${server.port}

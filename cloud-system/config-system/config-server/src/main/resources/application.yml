@@ -1,26 +1,21 @@
 # 应用服务名
 spring:
-   application:
-     name: config-server
-   cloud:
-     config:
-       server:
-         git:
-           uri: https://github.com/gaowei0115/cloud-config.git
-           username: gao_wei0115@sina.com
-           password: gaowei631890642
-           search-paths: /config/${APP_LOCATE:dev}
-     consul:
-       host: localhost
-       port: 8500
-       discovery:
-         ip-address: localhost
-         port: ${server.port}
-         instance-id: config-server-${server.port}
-         service-name: config-server
+  application:
+    name: config-server
+  profiles: native # 加载本地配置
+  cloud:
+    config:
+      server:
+        native:
+          search-locations: /E:/gw/work/workspace/TLMS/branches/184/plate-cloud-system/cloud-system/config-system/config-server/resources/
+
 server:
   port: 9096
-
-logging:
-  level:
-    root: debug
+eureka:
+  instance:
+    hostname: eureka.config.com
+    lease-expiration-duration-in-seconds: 10
+    lease-renewal-interval-in-seconds: 5
+  client:
+    service-url:
+      defaultZone: http://10.4.3.120:7005/eureka/,http://10.4.3.121:7006/eureka/,http://10.4.3.122:7007/eureka/
