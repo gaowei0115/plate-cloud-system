@@ -1,0 +1,25 @@
+spring:
+  application:
+    name: rabbitmq-producer
+  rabbitmq:
+    host: 10.4.3.170
+    port: 5672
+    username: root
+    password: 123456
+    template:
+      retry:
+        # 开启重试
+        enabled: true
+        # 第一次重试时间间隔
+        initial-interval: 1000ms
+        # 重试次数
+        max-attempts: 3
+        # 最长重试间隔
+        max-interval: 3000ms
+        # 下次重试间隔倍数
+        multiplier: 2
+    # 确认消息已发送到队列
+    publisher-returns: true
+server:
+  port: 9098
+

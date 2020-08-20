@@ -1,17 +1,25 @@
+## 指定配置文件中心访问路径
+## 配置文件访问规则 xxx-dev.yml
+## xxx/dev/
+## 其中xxx 是配置文件前缀
+## http://localhost:9096/client/prod/
 spring:
   application:
-    name: config-client
+    name: client
   cloud:
     config:
       discovery:
         enabled: true
-        service-id: config-client-eureka
+        service-id: config-server
+      profile: prod
+      fail-fast: true
+      label: master
 
 eureka:
   client:
     healthcheck:
       enabled: true
     service-url:
-      defaultZone: http://localhost:7005/eureka/
+      defaultZone: http://10.4.3.120:7005/eureka/,http://10.4.3.121:7006/eureka/,http://10.4.3.122:7007/eureka/
   instance:
     prefer-ip-address: true

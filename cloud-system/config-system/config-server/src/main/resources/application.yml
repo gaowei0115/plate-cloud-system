@@ -7,11 +7,11 @@ server:
   port: 9096
 eureka:
   instance:
-    hostname: eureka.config.com
+    hostname: config.server.com
     lease-expiration-duration-in-seconds: 10
     lease-renewal-interval-in-seconds: 5
   client:
     healthcheck:
       enabled: true
     service-url:
-      defaultZone: http://localhost:7005/eureka/
+      defaultZone: http://10.4.3.120:7005/eureka/,http://10.4.3.121:7006/eureka/,http://10.4.3.122:7007/eureka/

@@ -11,4 +11,39 @@
     https://github.com/gaowei0115/cloud-config.git
     
     
+2. 配置中心配置要求
+    
+    与SpringCloud Config相关配置需配置到bootstrap.yml配置文件中
+    与SpringBoot服务相关配置需配置到application.yml配置文件中
+    
+3. 动态刷新客户端获取配置文件信息
+    1. 原生态刷新技术
+        在引用类配置@RefreshScope注解
+        此方式同时还要修改@Value注解内容为@Value("${info:error}")，因为刷新的时候需要配置信息有默认值，否则会报错。
+        
+        
+        SpringBoot2.x 后续版本
+        需要引入
+        <dependency>
+                    <groupId>org.springframework.boot</groupId>
+                    <artifactId>spring-boot-starter-actuator</artifactId>
+                </dependency>
+        配置需要开启refresh
+        management:
+          endpoints:
+            web:
+              base-path: /actuator
+              exposure:
+                # 打开部分
+                include: refresh,health,info
+                # 打开全部
+                #include: *
+          server:
+            port: 8081
+        
+        通过postman  
+            post请求http://localhost:8081/actuator/refresh
+        
+        
+    2. 通过消息队列刷新
     

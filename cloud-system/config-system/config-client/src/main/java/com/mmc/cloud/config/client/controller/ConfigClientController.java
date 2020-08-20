@@ -12,14 +12,14 @@ import org.springframework.web.bind.annotation.RestController;
  * @date： 2020-08-18 16:27
  * @history: (version) author date desc
  */
-//@RefreshScope
+@RefreshScope
 @RestController
 public class ConfigClientController {
 
-    @Value("${name}")
+    @Value("${client.prod.name:error}")
     private String name;
 
-    @RequestMapping("/name")
+    @RequestMapping("/prod")
     public String from() {
         return this.name;
     }

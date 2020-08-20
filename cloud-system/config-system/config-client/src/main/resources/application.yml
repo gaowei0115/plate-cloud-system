@@ -1,2 +1,13 @@
 server:
   port: 8086
+management:
+  endpoints:
+    web:
+      base-path: /actuator
+      exposure:
+        # 打开部分
+        include: refresh,health,info
+        # 打开全部
+        #include: *
+  server:
+    port: 8081

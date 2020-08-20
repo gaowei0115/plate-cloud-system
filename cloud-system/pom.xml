@@ -17,6 +17,7 @@
         <module>ribbon-system</module>
         <module>gateway-system</module>
         <module>config-system</module>
+        <module>bus-system</module>
     </modules>
     <packaging>pom</packaging>
     <description>spring cloud 架构学习</description>
