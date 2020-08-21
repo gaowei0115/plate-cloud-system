@@ -6,5 +6,31 @@ spring:
     port: 5672
     username: root
     password: 123456
+    listener:
+      # direct 模式
+      direct:
+        # 启动时自动加载
+        auto-startup: true
+        # ack模式
+        acknowledge-mode: auto
+        # 每个消费队列消费者数
+        consumers-per-queue: 100
+        # 默认是否将拒绝传送的消息重新入队
+        default-requeue-rejected: true
+        # 空闲容器事件发布时间间隔
+        idle-event-interval: 10000
+        # 每个消费者可最大处理的nack消息数量
+        prefetch: 1000
+        # 启用重试机制
+        retry:
+          enabled: true
+          # 重试时间间隔 第一次到第二次
+          initial-interval: 1000
+          # 重试次数
+          max-attempts: 3
+          # 最大重试时间间隔
+          max-interval: 10000
+          # 每次重试时间间隔 乘以 此倍数
+          multiplier: 2
 server:
   port: 9099

@@ -1,5 +1,9 @@
 package com.mmc.cloud.bus.rabbit.producer.service;
 
+import com.mmc.cloud.bus.rabbit.producer.vo.LogInfo;
+import com.mmc.cloud.bus.rabbit.producer.vo.MailVo;
+import com.mmc.cloud.bus.rabbit.producer.vo.SmsVo;
+
 /**
  * @desrciption:
  * @author: GW
@@ -21,4 +25,25 @@ public interface IMessageService {
      *      发送消息条目
      */
     void sendWorkMessage(int num);
+
+    /**
+     * 订阅者模式-邮件
+     * @param mailVo
+     *          邮件对象
+     */
+    void sendFanoutMailMessage(MailVo mailVo);
+
+    /**
+     * 订阅者模式 - 短信
+     * @param smsVo
+     *          短信对象
+     */
+    void sendFanoutSmsMessage(SmsVo smsVo);
+
+    /**
+     * 路由模式 - 发送消息（info、debug、warn、error）
+     * @param logInfo
+     *          消息实体
+     */
+    void sendDirectMessage(LogInfo logInfo);
 }

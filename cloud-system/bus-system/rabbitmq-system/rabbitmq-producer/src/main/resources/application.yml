@@ -20,6 +20,8 @@ spring:
         multiplier: 2
     # 确认消息已发送到队列
     publisher-returns: true
+    # 消息确认机制
+    publisher-confirm-type: correlated
 server:
   port: 9098
 

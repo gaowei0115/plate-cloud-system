@@ -2,12 +2,10 @@ package com.mmc.cloud.bus.rabbit.producer.config;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.amqp.core.Message;
+import org.springframework.amqp.core.*;
 import org.springframework.amqp.rabbit.connection.ConnectionFactory;
-import org.springframework.amqp.rabbit.connection.CorrelationData;
 import org.springframework.amqp.rabbit.core.RabbitTemplate;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.PropertySource;
@@ -31,6 +29,114 @@ public class RabbitMqConfig {
     @Value("${rabbitmq.work.queue}")
     public String workQueue;
 
+    @Value("${rabbitmq.fanout.exchange.email}")
+    public String fanoutMailExchange;
+
+    @Value("${rabbitmq.fanout.exchange.sms}")
+    public String fanoutSmsExchange;
+
+    @Value("${rabbitmq.fanout.queue.email1}")
+    public String fanoutMailQueueA;
+
+    @Value("${rabbitmq.fanout.queue.email2}")
+    public String fanoutMailQueueB;
+
+    @Value("${rabbitmq.fanout.queue.sms}")
+    public String fanoutSmsQueue;
+
+
+    /**
+     * 订阅者模式-邮件交换机
+     * @return
+     *      FanoutExchange对象
+     */
+    @Bean
+    public FanoutExchange mailExchange() {
+        return new FanoutExchange(fanoutMailExchange);
+    }
+
+    /**
+     * 订阅者模式-短信交换机
+     * @return
+     *      FanoutExchange对象
+     */
+    @Bean
+    public FanoutExchange smsExchange() {
+        return new FanoutExchange(fanoutSmsExchange);
+    }
+
+    /**
+     * 声明一个fanout模式 - 邮件队列
+     * @return
+     *      邮件队列对象
+     */
+    @Bean
+    public Queue mailQueueA() {
+        return new Queue(fanoutMailQueueA);
+    }
+
+    /**
+     * 声明一个fanout模式 - 邮件队列
+     * @return
+     *      邮件队列对象
+     */
+    @Bean
+    public Queue mailQueueB() {
+        return new Queue(fanoutMailQueueB);
+    }
+
+    /**
+     * 声明一个fanout模式 - 短信队列
+     * @return
+     *      短信队列对象
+     */
+    @Bean
+    public Queue smsQueue() {
+        return new Queue(fanoutSmsQueue);
+    }
+
+
+    /**
+     * 绑定邮件 exchange与queue
+     * @param mailExchange
+     *          交换机
+     * @param mailQueueA
+     *          队列
+     * @return
+     *          绑定对象
+     */
+    @Bean
+    public Binding bindingMailExchangeA(FanoutExchange mailExchange, Queue mailQueueA){
+        return BindingBuilder.bind(mailQueueA).to(mailExchange);
+    }
+
+    /**
+     * 绑定邮件 exchange与queue
+     * @param mailExchange
+     *          交换机
+     * @param mailQueueB
+     *          队列
+     * @return
+     *          绑定对象
+     */
+    @Bean
+    public Binding bindingMailExchangeB(FanoutExchange mailExchange, Queue mailQueueB){
+        return BindingBuilder.bind(mailQueueB).to(mailExchange);
+    }
+
+    /**
+     * 绑定短信 exchange与queue
+     * @param smsExchange
+     *          交换机
+     * @param smsQueue
+     *          队列
+     * @return
+     *          绑定对象
+     */
+    @Bean
+    public Binding bindingSmsExchange(FanoutExchange smsExchange, Queue smsQueue) {
+        return BindingBuilder.bind(smsQueue).to(smsExchange);
+    }
 
 
     @Bean
@@ -41,24 +147,21 @@ public class RabbitMqConfig {
         //设置开启Mandatory,才能触发回调函数,无论消息推送结果怎么样都强制调用回调函数
         rabbitTemplate.setMandatory(true);
 
-        rabbitTemplate.setConfirmCallback(new RabbitTemplate.ConfirmCallback() {
-            @Override
-            public void confirm(CorrelationData correlationData, boolean b, String s) {
-                logger.info("ConfirmCallback:     " + "相关数据：" + correlationData);
-                logger.info("ConfirmCallback:     " + "确认情况：" + b);
-                logger.info("ConfirmCallback:     " + "原因：" + s);
+        // 消息确认
+        rabbitTemplate.setConfirmCallback((correlationData, ack, cause) -> {
+            logger.info("RabbitMQ Message Confirm:      >>state: {}", ack ? "成功" : "失败");
+            logger.info("RabbitMQ Message Confirm:      >>correlation data: {}", correlationData);
+            if (ack) {
+                logger.info("RabbitMQ Message Confirm:      >>cause: {}", cause);
             }
         });
 
-        rabbitTemplate.setReturnCallback(new RabbitTemplate.ReturnCallback() {
-            @Override
-            public void returnedMessage(Message message, int replyCode, String replyText, String exchange, String routingKey) {
-                logger.info("ReturnCallback:     " + "消息：" + message);
-                logger.info("ReturnCallback:     " + "回应码：" + replyCode);
-                logger.info("ReturnCallback:     " + "回应信息：" + replyText);
-                logger.info("ReturnCallback:     " + "交换机：" + exchange);
-                logger.info("ReturnCallback:     " + "路由键：" + routingKey);
-            }
+        // 消息返回
+        // message 返回消息、replyCode 回应码、replyText 回应信息、exchange 交换机、routingKey 路由key
+        rabbitTemplate.setReturnCallback((message, replyCode, replyText, exchange, routingKey) -> {
+            logger.info("RabbitMQ Message return:      >>message: {}", message);
+            logger.info("RabbitMQ Message return:      >>replyCode: {}", replyCode);
+            logger.info("RabbitMQ Message return:      >>replyText: {}", replyText);
         });
         return rabbitTemplate;
     }
