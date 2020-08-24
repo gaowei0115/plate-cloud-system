@@ -47,3 +47,27 @@
         
     2. 通过消息队列刷新
     
+    通过rabbitmq整合实现消息总线
+    引入jar
+    <dependency>
+                <groupId>org.springframework.cloud</groupId>
+                <artifactId>spring-cloud-starter-bus-amqp</artifactId>
+            </dependency>
+    
+    配置文件中引入rabbitmq连接配置
+    spring:
+      rabbitmq:
+        host: 10.4.3.170
+        port: 5672
+        username: root
+        password: 123456
+    management:
+      endpoints:
+        web:
+          base-path: /actuator
+          exposure:
+            # 打开全部
+            include: "*"
+            
+    通过访问post  http://localhost:8081/actuator/bus-refresh 
+            刷新配置
