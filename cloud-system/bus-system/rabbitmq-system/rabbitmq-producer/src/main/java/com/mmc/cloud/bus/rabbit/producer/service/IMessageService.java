@@ -46,4 +46,9 @@ public interface IMessageService {
      *          消息实体
      */
     void sendDirectMessage(LogInfo logInfo);
+
+    /**
+     * 主题模式 - 发送消息
+     */
+    void sendTopicMessage(String type);
 }

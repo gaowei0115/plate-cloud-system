@@ -4,6 +4,7 @@ import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
 import com.mmc.cloud.bus.rabbit.producer.config.RabbitMqConfig;
 import com.mmc.cloud.bus.rabbit.producer.config.RabbitMqDirectConfig;
+import com.mmc.cloud.bus.rabbit.producer.config.RabbitMqTopicConfig;
 import com.mmc.cloud.bus.rabbit.producer.service.IMessageService;
 import com.mmc.cloud.bus.rabbit.producer.vo.LogInfo;
 import com.mmc.cloud.bus.rabbit.producer.vo.MailVo;
@@ -116,6 +117,25 @@ public class MessageServiceImpl implements IMessageService {
         } else {
             logger.info("路由模式-发送日志消息进入other(info,warn,debug)队列");
             rabbitTemplate.convertAndSend(RabbitMqDirectConfig.logExchangeName, RabbitMqDirectConfig.logOtherKeyName, message);
+        }
+    }
+
+    static final String PAY = "pay";
+    static final String TRADE = "trade";
+
+    @Override
+    public void sendTopicMessage(String type) {
+        sequence.set(1000000000000L);
+        String message = "";
+        logger.info("主题模式-routingKey {}", type);
+        if (type.contains(PAY)) {
+            message = "pay orderNo=" + sequence.getAndIncrement();
+            logger.info("主题模式-发送消息 {}", message);
+            rabbitTemplate.convertAndSend(RabbitMqTopicConfig.topicExchange, type, message);
+        } else if (type.contains(TRADE)) {
+            message = "trade orderNo=" + sequence.getAndIncrement();
+            logger.info("主题模式-发送消息 {}", message);
+            rabbitTemplate.convertAndSend(RabbitMqTopicConfig.topicExchange, type, message);
         }
     }
 }

@@ -70,4 +70,10 @@ public class MessageController {
         messageService.sendDirectMessage(logInfo);
         return "success";
     }
+
+    @GetMapping("/topic")
+    public String topic(@RequestParam("type") String type) {
+        messageService.sendTopicMessage(type);
+        return "success";
+    }
 }
