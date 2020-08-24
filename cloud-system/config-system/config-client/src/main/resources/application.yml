@@ -6,8 +6,15 @@ management:
       base-path: /actuator
       exposure:
         # 打开部分
-        include: refresh,health,info
+#        include: refresh,health,info
         # 打开全部
-        #include: *
+        include: "*"
   server:
     port: 8081
+
+spring:
+  rabbitmq:
+    host: 10.4.3.170
+    port: 5672
+    username: root
+    password: 123456

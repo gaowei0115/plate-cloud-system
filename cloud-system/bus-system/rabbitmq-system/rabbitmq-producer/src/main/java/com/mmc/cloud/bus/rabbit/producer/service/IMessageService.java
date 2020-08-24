@@ -49,6 +49,8 @@ public interface IMessageService {
 
     /**
      * 主题模式 - 发送消息
+     * @param type
+     *          routing key
      */
     void sendTopicMessage(String type);
 }
